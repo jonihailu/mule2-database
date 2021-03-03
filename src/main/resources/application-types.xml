@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="output-json-mule2" format="json">
+      <types:shape format="weave" example="examples/requestapi-1.json"><![CDATA[%dw 2.0
+
+type output_json_mule2 = Array<{|  id: Number {"typeId": "int"},   position: String,   salary: String|}> {"example": "[{\\\"id\\\":123,\\\"position\\\":\\\"Developer\\\",\\\"salary\\\":\\\"\$135000\\/annum\\\"},{\\\"id\\\":321,\\\"position\\\":\\\"Consultant\\\",\\\"salary\\\":\\\"\$147000\\/annum\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="input-json-metadata" format="json">
+      <types:shape format="weave" example="examples/requestapi.json"><![CDATA[%dw 2.0
+
+type input_json_metadata = Array<{|  id: Number {"typeId": "int"},   position: String,   salary: String|}> {"example": "[{\\\"id\\\":123,\\\"position\\\":\\\"Developer\\\",\\\"salary\\\":\\\"\$135000\\/annum\\\"},{\\\"id\\\":321,\\\"position\\\":\\\"Consultant\\\",\\\"salary\\\":\\\"\$147000\\/annum\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#6b6343a9-e127-4d89-bca4-c9ca49c88e4a">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input-json-metadata"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="output-json-mule2"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#62f1a48a-0703-4be9-9159-06ee4fad8a95">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input-json-metadata"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="output-json-mule2"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
